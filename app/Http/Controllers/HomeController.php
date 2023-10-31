@@ -2,20 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Video;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -23,6 +13,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $videos = Video::where('status', '=', 1)
+            ->join('users', 'users.id', '=', 'videos.user_id')
+            ->select('videos.*', 'users.name', 'users.id as id_user', 'users.email')
+            ->get();
+        return view('home')->with('videos', $videos);
     }
 }
