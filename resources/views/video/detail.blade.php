@@ -22,7 +22,6 @@
             <div class="panel panel-default video-data">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        {{-- {{$video}} --}}
                         Subido por <strong>{{ $video->name}}</strong> el
                         {{ $video->created_at }}
                     </div>
@@ -33,7 +32,7 @@
             </div>
             <!--comentarios -->
             <div>
-                {{-- @include('comments') --}}
+                @include('comments')
             </div>
         </div>
     </div>

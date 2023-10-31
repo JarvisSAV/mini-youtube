@@ -53,3 +53,5 @@ Route::get('/video-file/{filename}', array(
     'as' => 'fileVideo',
     'uses' => 'App\Http\Controllers\VideoController@getVideo'
 ));
+
+Route::resource('/comentarios', App\Http\Controllers\ComentarioController::class);
