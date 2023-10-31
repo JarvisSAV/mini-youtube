@@ -216,7 +216,18 @@ class VideoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $video = Video::find($id);
+        if ($video) {
+            $video->status = 0;
+            $video->save();
+            return redirect()->route('home')->with(array(
+                "message" => "El video se ha eliminado correctamente"
+            ));
+        } else {
+            return redirect()->route('home')->with(array(
+                "message" => "El video que trata de eliminar no existe"
+            ));
+        }
     }
 
     public function delete_video($video_id)
