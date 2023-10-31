@@ -7,7 +7,7 @@ use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Response;
 
 class VideoController extends Controller
 {
@@ -221,5 +221,10 @@ class VideoController extends Controller
                 "message" => "El video que trata de eliminar no existe"
             ));
         }
+    }
+    public function getImage($filename)
+    {
+        $file = Storage::disk('images')->get($filename);
+        return new Response($file, 200);
     }
 }

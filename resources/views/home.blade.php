@@ -17,7 +17,7 @@
                         <!-- imagen del video -->
                         @if (Storage::disk('images')->has($video->image))
                             {{-- <a href="{{ route('videos.show', $video->id) }}" class=""> --}}
-                                {{-- <img class="card-img-top" src="{{ route('imageVideo', $video->image) }}" /> --}}
+                                <img class="card-img-top" src="{{ route('imageVideo', $video->image) }}" />
                             {{-- </a> --}}
                         @endif
                         <div class="card-body">

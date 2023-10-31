@@ -41,3 +41,8 @@ Route::get('delete-video/{video_id}', [
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\VideoController@delete_video'
 ]);
+
+Route::get('/miniatura/{filename}', array(
+    'as' => 'imageVideo',
+    'uses' => 'App\Http\Controllers\VideoController@getImage'
+));
