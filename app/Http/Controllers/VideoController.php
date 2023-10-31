@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
@@ -144,7 +145,18 @@ class VideoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $video = Video::query()
+            ->join('users', 'users.id', '=', 'videos.user_id')
+            ->select('videos.*', 'users.name', 'users.email')
+            ->where('videos.id', '=', $id);
+        $comentarios = Comentario::query()
+            ->join('users', 'users.id', '=', 'comentarios.user_id')
+            ->select('comentarios.*', 'users.name', 'users.email')
+            ->where('video_id', '=', $id);
+        return view('video.detail', array(
+            'video' => $video->get()[0],
+            'comentarios' => $comentarios->get(),
+        ));
     }
 
     /**
@@ -225,6 +237,11 @@ class VideoController extends Controller
     public function getImage($filename)
     {
         $file = Storage::disk('images')->get($filename);
+        return new Response($file, 200);
+    }
+    public function getVideo($filename)
+    {
+        $file = Storage::disk('videos')->get($filename);
         return new Response($file, 200);
     }
 }

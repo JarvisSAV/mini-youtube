@@ -16,9 +16,9 @@
                     <div class="card h-100">
                         <!-- imagen del video -->
                         @if (Storage::disk('images')->has($video->image))
-                            {{-- <a href="{{ route('videos.show', $video->id) }}" class=""> --}}
+                            <a href="{{ route('videos.show', $video->id) }}" class="">
                                 <img class="card-img-top" src="{{ route('imageVideo', $video->image) }}" />
-                            {{-- </a> --}}
+                            </a>
                         @endif
                         <div class="card-body">
                             <h5 class="card-title"> {{ $video->title }}</h5>

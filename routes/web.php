@@ -46,3 +46,10 @@ Route::get('/miniatura/{filename}', array(
     'as' => 'imageVideo',
     'uses' => 'App\Http\Controllers\VideoController@getImage'
 ));
+
+Route::get('/videos/details/{video_id}', [App\Http\Controllers\VideoController::class, 'show'])->name('videos.show');
+
+Route::get('/video-file/{filename}', array(
+    'as' => 'fileVideo',
+    'uses' => 'App\Http\Controllers\VideoController@getVideo'
+));
