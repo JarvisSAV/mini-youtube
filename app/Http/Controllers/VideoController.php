@@ -152,7 +152,10 @@ class VideoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $video = Video::findOrFail($id);
+        return view('video.edit', array(
+            'video' => $video
+        ));
     }
 
     /**
@@ -160,7 +163,40 @@ class VideoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:5',
+            'description' => 'required',
+        ]);
+
+        $user = Auth::user();
+        $video = Video::findOrFail($id);
+        $video->user_id = $user->id;
+        $video->title = $request->input('title');
+        $video->description = $request->input('description');
+
+        //Subida de la miniatura
+        $image = $request->file('image');
+        if ($image) {
+            $image_path = time() . $image->getClientOriginalName();
+            Storage::disk('images')->put($image_path, File::get($image));
+
+            $video->image = $image_path;
+        }
+
+        //Subida del video
+        $video_file = $request->file('video');
+        if ($video_file) {
+            $video_path = time() . $video_file->getClientOriginalName();
+            Storage::disk('videos')->put($video_path, File::get($video_file));
+            $video->video_path = $video_path;
+        }
+
+        $video->status = 1;
+
+        $video->save();
+        return redirect()->route('videos.index')->with(array(
+            'message' => 'El video se ha actualizado correctamente'
+        ));
     }
 
     /**
@@ -186,5 +222,4 @@ class VideoController extends Controller
             ));
         }
     }
-
 }
